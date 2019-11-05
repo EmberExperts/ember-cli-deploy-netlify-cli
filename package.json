@@ -25,9 +25,6 @@
       "commitMessage": "v${version}",
       "pushArgs": "--no-verify"
     },
-    "npm": {
-      "publish": false
-    },
     "github": {
       "release": true
     },
