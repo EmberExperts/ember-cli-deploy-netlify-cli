@@ -27,7 +27,7 @@ module.exports = {
         const distDir = this.readConfig('distDir');
 
         this.log('NETLIFY: Deploying...');
-        this.cliExec(`deploy --prod --dir ${distDir} --message ${message}`);
+        this.cliExec(`deploy --prod --dir ${distDir} --message "${message}"`);
 
         this.log('NETLIFY: Deployed!...');
       },

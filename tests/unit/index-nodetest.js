@@ -119,7 +119,7 @@ describe('netlify-cli', function() {
       this.sinon.assert.calledWithExactly(stub,
         'NETLIFY_AUTH_TOKEN=my-auth-token ' +
         'NETLIFY_SITE_ID=my-project ' +
-        'node_modules/.bin/netlify deploy --prod --dir my-dist-dir --message v1.0.0+1234567');
+        'node_modules/.bin/netlify deploy --prod --dir my-dist-dir --message "v1.0.0+1234567"');
     });
   });
 });
