@@ -1,6 +1,6 @@
 # ember-cli-deploy-netlify-cli
 
-Integrate your deploy pipeline with netlify.
+Integrate your deploy pipeline with netlify manual deploys using netlify-cli.
 
 
 # Compatibility
