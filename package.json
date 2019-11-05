@@ -1,0 +1,57 @@
+{
+  "name": "ember-cli-deploy-netlify-cli",
+  "version": "0.1.0",
+  "description": "Netlify CLI integration for ember-cli-deploy",
+  "keywords": [
+    "ember-addon",
+    "ember-cli-deploy-plugin",
+    "netlify"
+  ],
+  "repository": "https://github.com/exelord/ember-cli-deploy-netlify-cli",
+  "license": "MIT",
+  "author": "Exelord",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "./node_modules/mocha/bin/mocha tests/unit/index-nodetest.js",
+    "release": "release-it"
+  },
+  "release-it": {
+    "git": {
+      "tagName": "v${version}",
+      "commitMessage": "v${version}",
+      "pushArgs": "--no-verify"
+    },
+    "npm": {
+      "publish": false
+    },
+    "github": {
+      "release": true
+    },
+    "hooks": {
+      "before:init": "npm run lint && npm test"
+    }
+  },
+  "peerDependencies": {
+    "ember-cli-deploy": "^1.0.2"
+  },
+  "dependencies": {
+    "ember-cli-deploy-plugin": "^0.2.9",
+    "ember-cli-deploy-revision-data": "^1.0.0",
+    "netlify-cli": "^2.20.2"
+  },
+  "devDependencies": {
+    "@paycertify/eslint-plugin": "github:paycertify/eslint-plugin#v0.9.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.6.0",
+    "mocha": "^6.2.2",
+    "release-it": "^12.4.3",
+    "sinon": "^7.5.0"
+  },
+  "engines": {
+    "node": "8.* || >= 10.*"
+  }
+}
