@@ -22,9 +22,8 @@ Add plugin config to your `config/deploy.js`:
 ```js
 {
   'netlify-cli': {
-    appName: 'netlify-app-name',
-    orgName: 'netlify-org-name',
-    authToken: process.env.netlify_AUTH_TOKEN
+    siteId: 'netlify-site-id',
+    authToken: process.env.NETLIFY_AUTH_TOKEN
   }
 }
 ```
