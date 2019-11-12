@@ -11,6 +11,10 @@ module.exports = {
       name: options.name,
 
       defaultConfig: {
+        promoteToProd: true,
+
+        functionsDir: '',
+
         distDir(context) {
           return context.distDir;
         },
@@ -25,21 +29,29 @@ module.exports = {
       upload() {
         const message = this.readConfig('revisionKey');
         const distDir = this.readConfig('distDir');
+        const promoteToProd = this.readConfig('promoteToProd');
+        const functionsDir = this.readConfig('functionsDir');
+
+        const commandOptions = [
+          promoteToProd ? '--prod' : '',
+          distDir ? `--dir ${distDir}` : '',
+          functionsDir ? `--functions ${functionsDir}` : '',
+          message ? `--message "${message}"` : ''
+        ].filter((option) => option);
 
         this.log('NETLIFY: Deploying...');
-        this.cliExec(`deploy --prod --dir ${distDir} --message "${message}"`);
-
+        this.cliExec('deploy', commandOptions);
         this.log('NETLIFY: Deployed!...');
       },
 
-      cliExec(command) {
+      cliExec(command, commandOptions = []) {
         const authToken = this.readConfig('authToken');
         const siteId = this.readConfig('siteId');
 
         return this._exec(
           `NETLIFY_AUTH_TOKEN=${authToken} ` +
           `NETLIFY_SITE_ID=${siteId} ` +
-          `node_modules/.bin/netlify ${command}`
+          `node_modules/.bin/netlify ${command} ${commandOptions.join(' ')}`
         );
       },
 

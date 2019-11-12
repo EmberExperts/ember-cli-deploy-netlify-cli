@@ -96,6 +96,24 @@ describe('netlify-cli', function() {
         assert.equal(plugin.readConfig('distDir'), 'my-dist-dir');
       });
 
+      it('functionsDir', function() {
+        const plugin = Plugin.createDeployPlugin({ name: 'netlify-cli' });
+
+        plugin.beforeHook(this.context);
+        plugin.configure(this.context);
+
+        assert.equal(plugin.readConfig('functionsDir'), '');
+      });
+
+      it('promoteToProd', function() {
+        const plugin = Plugin.createDeployPlugin({ name: 'netlify-cli' });
+
+        plugin.beforeHook(this.context);
+        plugin.configure(this.context);
+
+        assert.equal(plugin.readConfig('promoteToProd'), true);
+      });
+
       it('revisionKey', function() {
         const plugin = Plugin.createDeployPlugin({ name: 'netlify-cli' });
 
@@ -120,6 +138,54 @@ describe('netlify-cli', function() {
         'NETLIFY_AUTH_TOKEN=my-auth-token ' +
         'NETLIFY_SITE_ID=my-project ' +
         'node_modules/.bin/netlify deploy --prod --dir my-dist-dir --message "v1.0.0+1234567"');
+    });
+
+    it('deploys to netlify with functions', function() {
+      const plugin = Plugin.createDeployPlugin({ name: 'netlify-cli' });
+      const stub = this.sinon.stub(plugin, '_exec');
+      const context = {
+        ...this.context,
+
+        config: {
+          'netlify-cli': {
+            ...this.context.config['netlify-cli'],
+            functionsDir: 'my-functions-dir'
+          }
+        }
+      };
+
+      plugin.beforeHook(context);
+      plugin.configure(context);
+      plugin.upload();
+
+      this.sinon.assert.calledWithExactly(stub,
+        'NETLIFY_AUTH_TOKEN=my-auth-token ' +
+        'NETLIFY_SITE_ID=my-project ' +
+        'node_modules/.bin/netlify deploy --prod --dir my-dist-dir --functions my-functions-dir --message "v1.0.0+1234567"');
+    });
+
+    it('deploys to netlify without promoting to prod', function() {
+      const plugin = Plugin.createDeployPlugin({ name: 'netlify-cli' });
+      const stub = this.sinon.stub(plugin, '_exec');
+      const context = {
+        ...this.context,
+
+        config: {
+          'netlify-cli': {
+            ...this.context.config['netlify-cli'],
+            promoteToProd: false
+          }
+        }
+      };
+
+      plugin.beforeHook(context);
+      plugin.configure(context);
+      plugin.upload();
+
+      this.sinon.assert.calledWithExactly(stub,
+        'NETLIFY_AUTH_TOKEN=my-auth-token ' +
+        'NETLIFY_SITE_ID=my-project ' +
+        'node_modules/.bin/netlify deploy --dir my-dist-dir --message "v1.0.0+1234567"');
     });
   });
 });

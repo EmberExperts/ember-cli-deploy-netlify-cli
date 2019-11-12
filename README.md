@@ -28,7 +28,15 @@ Add plugin config to your `config/deploy.js`:
 }
 ```
 
-Optionaly set revision type to `version-commit` to have unified versioning pattern:
+Extra config:
+
+- `promoteToProd` (DEFAULT: `true`) - Promote deploy to production
+- `functionsDir` - (DEFAULT: `''`) - Specify a functions folder to deploy
+- `destDir` (DEFAULT: ember dist) - Specify a folder to deploy
+
+_____
+
+Optionally you can set revision type to `version-commit` to have unified versioning pattern:
 ```js
 {
   'revision-data': {
