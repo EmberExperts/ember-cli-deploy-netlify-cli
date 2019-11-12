@@ -33,6 +33,7 @@ Extra config:
 - `promoteToProd` (DEFAULT: `true`) - Promote deploy to production
 - `functionsDir` - (DEFAULT: `''`) - Specify a functions folder to deploy
 - `destDir` (DEFAULT: ember dist) - Specify a folder to deploy
+- `message` (DEFAULT: app version) - Specify a deploy message
 
 _____
 
